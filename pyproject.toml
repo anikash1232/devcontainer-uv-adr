@@ -1,0 +1,11 @@
+[project]
+name = "tk02-adr-for-uv-anikash1232"
+version = "0.1.0"
+description = "Minimal pyproject for uv dependency management (no deps yet)."
+dependencies = [
+    "requests>=2.32.5",
+]
+
+# `uv` will read this file to manage dependencies. We intentionally leave
+# dependencies empty here; the project will rely on `uv` to populate
+# `uv.lock` when developers add dependencies and run `uv sync`.
