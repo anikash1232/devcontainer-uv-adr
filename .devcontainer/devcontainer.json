@@ -1,4 +1,7 @@
 {
+  // Dev container for the project. This installs a Python image
+  // and runs a short `postCreateCommand` to prepare a project-local
+  // virtual environment, install `uv` there, and run `uv sync`.
   "name": "COMP423 Python Dev Container",
   "image": "mcr.microsoft.com/devcontainers/python:3.14",
   "customizations": {
@@ -12,5 +15,13 @@
       }
     }
   },
-  "remoteUser": "vscode"
+  "remoteUser": "vscode",
+
+  // Run once after the container is created. The script below:
+  // 1) creates a project-local virtualenv at `.venv` (if missing)
+  // 2) activates that venv and upgrades pip
+  // 3) installs `uv` into the venv
+  // 4) runs `uv sync` to install any pinned dependencies (no-op now)
+  // Using a single shell line keeps behaviour consistent for non-interactive runs.
+  "postCreateCommand": "/bin/bash -lc 'python -m venv .venv || true && . .venv/bin/activate && python -m pip install --upgrade pip && pip install uv && uv sync || true'"
 }
