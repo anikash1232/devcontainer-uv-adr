@@ -9,7 +9,8 @@
       "extensions": [
         "ms-python.python",
         "ms-python.vscode-pylance",
-        "charliermarsh.ruff"
+        "charliermarsh.ruff",
+        "ms-python.debugpy"
       ],
       "settings": {
         "terminal.integrated.shell.linux": "/bin/bash",
@@ -23,7 +24,9 @@
         "python.analysis.typeCheckingMode": "basic",
         "python.linting.enabled": true,
         "python.linting.pycodestyleEnabled": false,
-        "python.linting.pylintEnabled": false
+        "python.linting.pylintEnabled": false,
+        "python.testing.pytestEnabled": true,
+        "python.testing.pytestArgs": ["tests"]
       }
     }
   },
