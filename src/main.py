@@ -4,8 +4,9 @@ This module provides a simple command-line tool to fetch and display weather
 information for a specified location using the wttr.in service.
 """
 
-import requests
 import sys
+
+import requests
 
 # Configuration constants
 DEFAULT_LOCATION = "Chapel Hill, NC"
