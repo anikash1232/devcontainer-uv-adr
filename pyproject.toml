@@ -9,6 +9,7 @@ dependencies = [
 [project.optional-dependencies]
 dev = [
     "ruff>=0.10.0",
+    "pyright>=1.1.0",
 ]
 
 # `uv` will read this file to manage dependencies. We intentionally leave
@@ -32,3 +33,12 @@ select = [
     "UP",    # pyupgrade
 ]
 ignore = ["E501"]  # Line too long (handled by formatter)
+
+[tool.pyright]
+pythonVersion = "3.14"
+typeCheckingMode = "basic"
+reportUnusedImport = "warning"
+reportUnusedVariable = "warning"
+reportUndefinedVariable = "error"
+reportTypeCommentUsage = "warning"
+reportMissingImports = "warning"
