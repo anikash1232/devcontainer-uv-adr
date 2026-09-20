@@ -1,56 +1,38 @@
-# COMP423 Base Dev Container
+# Dev Container and Toolchain ADRs
 
-The purpose of this dev container is to serve as a starting point for COMP423 projects
-driven by Architectural Design Records.
+A reproducible Python development environment, with each tooling choice documented as an
+architectural decision record.
 
-## Development — Dev Container
+## What it is
 
-- **Dev Container:** A minimal VS Code Dev Container is provided at [.devcontainer/devcontainer.json](.devcontainer/devcontainer.json).
-- **Image (pinned):** The container is pinned to Microsoft-supported Python `3.14` using `mcr.microsoft.com/devcontainers/python:3.14`.
-- **Why pinned:** Pinning to `3.14` ensures a reproducible Python runtime across developer machines and CI while remaining on the latest stable Python supported by the Dev Containers images.
-- **Recommended extensions:** The container suggests `ms-python.python`, `ms-python.vscode-pylance`, and testing tools.
-- **Usage:** In VS Code, choose _Remote-Containers: Open Folder in Container..._ and open the repository root to start the container.
+A dev container specification plus the reasoning behind it. Rather than a configuration
+that simply exists, every tool in the stack has a written record of what was chosen, what
+the alternatives were, and why the tradeoff went the way it did.
 
-This setup is intentionally minimal to keep onboarding fast and match CI tooling. Customize the Dev Container only if project-specific tools are required.
+## The decisions
 
-## Running Tests
+```
+docs/arch/
+  adr000-dev-container.md   containerised development as the baseline
+  adr001-use-uv.md          uv for dependency resolution and virtual environments
+  adr002-ruff.md            ruff for linting and formatting
+  adr003-pyright.md         pyright for static type checking
+  adr004-pytest.md          pytest as the test runner
+```
 
-### Via VSCode Testing Pane
+Each record follows the standard ADR shape — context, decision, consequences — so a future
+reader can tell whether a decision still holds or whether the conditions behind it have
+changed.
 
-1. Open the Testing pane (flask icon in the Activity Bar)
-2. Click "Run all tests" or run individual tests
-3. View code coverage in the integrated terminal
+The stack itself is modern and deliberately fast: `uv` in place of pip and venv, `ruff`
+replacing flake8 and black, `pyright` for type checking, `pytest` for tests. Pinning these
+in a container means every contributor gets byte-identical tooling.
 
-### Via Command Line
+## Using it
 
-Run all tests with coverage:
+Open in VS Code with the Dev Containers extension, or:
 
 ```bash
+uv sync
 uv run pytest
 ```
-
-Run specific test file:
-
-```bash
-uv run pytest tests/test_main.py
-```
-
-Run with verbose output:
-
-```bash
-uv run pytest -v
-```
-
-View coverage report in HTML format:
-
-```bash
-uv run pytest --cov=src --cov-report=html
-open htmlcov/index.html
-```
-
-### Test Configuration
-
-All test configuration is in [pyproject.toml](pyproject.toml):
-- **Test discovery:** Looks for tests in the `tests/` directory
-- **Coverage:** Measures coverage for the `src/` module
-- **Reports:** Generates terminal and HTML coverage reports
